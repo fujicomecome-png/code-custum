@@ -1,6 +1,6 @@
 {
-  "name": "agentLimited",
-  "description": "MakeCode for Minecraft (Education) extension exposing only agent move and turn",
+  "name": "agentMinimalEvents",
+  "description": "Expose only on start, chat command, and agent move/turn",
   "version": "0.0.1",
   "target": "minecraft",
   "dependencies": {
