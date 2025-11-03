@@ -1,5 +1,11 @@
+// custom.ts
+// Minimal wrapper extension that exposes only agent.move and agent.turn blocks
+// Namespace name controls the category shown in the MakeCode toolbox
+
 namespace agentLimited {
-    // 制限した方向列挙（公開する値だけ列挙）
+    /**
+     * Move directions exposed to block editor
+     */
     export enum MoveDirection {
         Forward = 0,
         Back = 1,
@@ -7,19 +13,23 @@ namespace agentLimited {
         Down = 3
     }
 
+    /**
+     * Turn directions exposed to block editor
+     */
     export enum TurnDirectionCustom {
         Left = 0,
         Right = 1
     }
 
     /**
-     * Agent を移動させる（ラッパー）
+     * Move the Agent a number of steps in a chosen direction
      */
-    //% block="agent move %dir|by %steps steps"
+    //% block="agent move %dir by %steps steps"
     //% dir.fieldEditor="gridpicker" dir.fieldOptions.columns=2
     //% steps.min=1 steps.max=100
     export function move(dir: MoveDirection, steps: number): void {
-        // MakeCode の組み込み agent API を呼ぶ
+        // Use the platform-provided agent API. If identifiers differ on your target,
+        // adjust SixDirection.* to the correct enum names observed in your MakeCode target.
         switch (dir) {
             case MoveDirection.Forward:
                 agent.move(SixDirection.Forward, steps);
@@ -37,7 +47,7 @@ namespace agentLimited {
     }
 
     /**
-     * Agent を回転させる（ラッパー）
+     * Turn the Agent left or right
      */
     //% block="agent turn %dir"
     //% dir.fieldEditor="gridpicker"
