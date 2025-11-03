@@ -1,7 +1,8 @@
 {
   "name": "agentLimited",
-  "description": "Expose only agent.move and agent.turn blocks",
+  "description": "MakeCode for Minecraft (Education) extension exposing only agent move and turn",
   "version": "0.0.1",
+  "target": "minecraft",
   "dependencies": {
     "core": "*",
     "minecraft": "*"
