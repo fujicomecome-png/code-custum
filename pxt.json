@@ -1,0 +1,13 @@
+{
+  "name": "agentLimited",
+  "description": "Expose only agent.move and agent.turn blocks",
+  "version": "0.0.1",
+  "dependencies": {
+    "core": "*",
+    "minecraft": "*"
+  },
+  "files": [
+    "custom.ts"
+  ],
+  "public": true
+}
