@@ -1,11 +1,28 @@
 // custom.ts
-// Minimal wrapper extension that exposes only agent.move and agent.turn blocks
-// Namespace name controls the category shown in the MakeCode toolbox
+// Minimal extension: On Start, On Chat command, Agent move and turn
 
-namespace agentLimited {
+namespace agentMinimal {
     /**
-     * Move directions exposed to block editor
+     * On start block (最初に一度だけ実行される)
      */
+    //% block="on start"
+    //% shim=pxtruntime::onStart
+    export function onStart(handler: () => void): void {
+        // shim を使ったイベントラッパー。MakeCode の on start を内部で登録する
+    }
+
+    /**
+     * Chat command イベント（引数: コマンド文字列）
+     */
+    //% block="on chat command %cmd"
+    //% cmd.defl="go"
+    export function onChatCommand(cmd: string, handler: (args?: any) => void): void {
+        // 実行時に player.onChat を登録する。プラットフォームの API 名が異なる場合は調整が必要。
+        player.onChat(cmd, function (msg) {
+            handler(msg);
+        });
+    }
+
     export enum MoveDirection {
         Forward = 0,
         Back = 1,
@@ -13,49 +30,31 @@ namespace agentLimited {
         Down = 3
     }
 
-    /**
-     * Turn directions exposed to block editor
-     */
     export enum TurnDirectionCustom {
         Left = 0,
         Right = 1
     }
 
     /**
-     * Move the Agent a number of steps in a chosen direction
+     * Agent を移動させる（ラッパー）
      */
     //% block="agent move %dir by %steps steps"
-    //% dir.fieldEditor="gridpicker" dir.fieldOptions.columns=2
     //% steps.min=1 steps.max=100
     export function move(dir: MoveDirection, steps: number): void {
-        // Use the platform-provided agent API. If identifiers differ on your target,
-        // adjust SixDirection.* to the correct enum names observed in your MakeCode target.
         switch (dir) {
-            case MoveDirection.Forward:
-                agent.move(SixDirection.Forward, steps);
-                break;
-            case MoveDirection.Back:
-                agent.move(SixDirection.Back, steps);
-                break;
-            case MoveDirection.Up:
-                agent.move(SixDirection.Up, steps);
-                break;
-            case MoveDirection.Down:
-                agent.move(SixDirection.Down, steps);
-                break;
+            case MoveDirection.Forward: agent.move(SixDirection.Forward, steps); break;
+            case MoveDirection.Back: agent.move(SixDirection.Back, steps); break;
+            case MoveDirection.Up: agent.move(SixDirection.Up, steps); break;
+            case MoveDirection.Down: agent.move(SixDirection.Down, steps); break;
         }
     }
 
     /**
-     * Turn the Agent left or right
+     * Agent を回転させる（ラッパー）
      */
     //% block="agent turn %dir"
-    //% dir.fieldEditor="gridpicker"
     export function turn(dir: TurnDirectionCustom): void {
-        if (dir === TurnDirectionCustom.Left) {
-            agent.turn(TurnDirection.Left);
-        } else {
-            agent.turn(TurnDirection.Right);
-        }
+        if (dir === TurnDirectionCustom.Left) agent.turn(TurnDirection.Left);
+        else agent.turn(TurnDirection.Right);
     }
 }
