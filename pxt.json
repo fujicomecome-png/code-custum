@@ -5,10 +5,11 @@
   "target": "minecraft",
   "dependencies": {
     "core": "*",
-    "minecraft": "*"
+    "pxt-minecraft": "*"
   },
   "files": [
     "custom.ts"
   ],
   "public": true
 }
+
